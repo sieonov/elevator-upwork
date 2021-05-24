@@ -1,0 +1,1 @@
+export const GET_ELEVATOR_LIST = 'GET_ELEVATOR_LIST';
