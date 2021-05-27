@@ -35,3 +35,9 @@
     margin-top: 16px * $i;
   }
 }
+
+// custom css
+.ant-pagination {
+  margin-top: 10px !important;
+  text-align: right;
+}

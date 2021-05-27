@@ -11,6 +11,7 @@ import {
 import ListElevator from './pages/ListElevator';
 import ElevatorDetails from './pages/ElevatorDetails';
 import './App.scss';
+import 'antd/dist/antd.css';
 
 const PrivateRoute = ({ component: InternalComponent, ...rest }) => (
   <Route

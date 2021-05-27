@@ -6,6 +6,14 @@ export const elevatorParams = [
   '5. RL2 (DCR) On-delay',
 ];
 
+export const defaultElevatorConfig = {
+  '1. Car Doors Openings': '1: Single Opening, 1 CGS and 1 HDL',
+  '2. Explicit Fire Phase II Signal': 'Unused',
+  '3. Fire Return Floor Signal': 'Unused',
+  '4. Door Limits Signals in Inspection Mode': 'Invalid',
+  '5. RL2 (DCR) On-delay': '5 Seconds',
+}
+
 export const carDoorOpening = [
   '1: Single Opening, 1 CGS\nand 1 HDL',
   '2: Dual Opening, 1 CGS\nand 1 HDL',
@@ -15,23 +23,28 @@ export const carDoorOpening = [
   '6: Dual Opening, 2 CGS\nand 2 HDL Staggered',
   '7: Dual Opening, 2 CGS,\n 2 HDL & GLC Walkthrough',
   '8:  Single Opening, 1 CGS,\nand 3 HDL',
-]
+];
 
 export const inputParams = [
-  'DFOF', 'DFCF', 'DFOR(Not used)', 'DFCR(Not used)', 'CGS1', 'HDL1', 'INS', 'GLC(Not used)', 'LEV(Not used)', 'FRF(Not used)', 'FSL', 'FSPII',
+  'DFOF', 'DFCF', 'DFOR', 'DFCR', 'CGS1', 'HDL1', 'INS', 'GLC', 'LEV', 'FRF', 'FSL', 'FSPII',
 ];
+
+export const defaultInputConfig = ['120V', '45% - 62%', 'Active High'];
 
 export const voltagesLevel = [
   12, 24, 48, 84, 120, 250
 ]
 
-export const voltageTH = [
-  '33% - 66%', '35% - 62%', '35% - 45%', '60% - 75%', '45% - 62%',
-]
+export const voltageTH = ['33% - 66%', '35% - 62%', '35% - 45%', '60% - 75%', '45% - 62%'];
 
-export const outputParams = [
-  'RL1', 'RL2', 'RL3', 'RL4',
-];
+export const outputParams = ['RL1', 'RL2', 'RL3', 'RL4'];
+
+export const defaultOutputConfig = {
+  'RL1': ['2. Car Motion Restricted (CMR)', 'Active High'],
+  'RL2': ['3. Door Closing Restricted (DCR)', 'Active High'],
+  'RL3': ['1. Disabled', 'Active High'],
+  'RL4': ['1. Disabled', 'Active High'],
+};
 
 export const outputFunc = [
   '1. Disabled',
@@ -58,4 +71,7 @@ export const outputFunc = [
   '22. DFOR and CGS1\n(DFOR & CGS1)',
   '23. DCR and DFOF\n(DCR & DFOF)',
   '24. DCR and DFOR\n(DCR & DFOR)',
-]
+];
+
+export const tablePage = 1;
+export const tableSize = 10;

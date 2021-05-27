@@ -4,7 +4,7 @@ import { Container, Table } from 'reactstrap';
 import get from 'lodash/get';
 import { addElevator } from '../../actions/elevators';
 import { calcElevatorConfig, calcInputConfig, calcOutputConfig } from '../../lib/utils';
-import { elevatorParams, inputParams, outputParams } from '../../lib/constants';
+import { elevatorParams, inputParams, outputParams, defaultElevatorConfig, defaultInputConfig, defaultOutputConfig } from '../../lib/constants';
 import './style.scss';
 
 const ElevatorDetails = (props) => {
@@ -55,7 +55,7 @@ const ElevatorDetails = (props) => {
     <Container className="elevator-details">
       <h2 className="py-4">Serial Number, Device, Firmware and Time</h2>
       <h4 className="text-center">ELEVATOR CONFIGURATION</h4>
-      <Table striped>
+      <Table striped className="elevator-config-tb">
         <thead>
           <tr>
             <th>Parameter</th>
@@ -67,14 +67,20 @@ const ElevatorDetails = (props) => {
             elevatorParams.map((elevatorParam) => (
               <tr>
                 <td>{elevatorParam}</td>
-                <td>{get(elevatorConfig, elevatorParam)}</td>
+                <td>
+                  {
+                    get(elevatorConfig, elevatorParam) !== get(defaultElevatorConfig, elevatorParam)
+                      ? (<b>{get(elevatorConfig, elevatorParam)}</b>)
+                      : get(elevatorConfig, elevatorParam)
+                  }
+                </td>
               </tr>
             ))
           }
         </tbody>
       </Table>
       <h4 className="mt-4 text-center">INPUTS CONFIGURATION</h4>
-      <Table striped>
+      <Table striped className="input-config-tb">
         <thead>
           <tr>
             <th>Input Name</th>
@@ -88,11 +94,27 @@ const ElevatorDetails = (props) => {
             inputParams.map((inputParam) => (
               <tr>
                 <td>{inputParam}</td>
-                <td>{get(inputConfig, `${inputParam}.0`)}</td>
-                <td>{get(inputConfig, `${inputParam}.1`)}</td>
-                <td>{get(inputConfig, `${inputParam}.2`)}</td>
-                <td>{get(inputConfig, `${inputParam}.3`)}</td>
-                <td />
+                <td>
+                  {
+                    defaultInputConfig[0] === get(inputConfig, `${inputParam}.0`)
+                      ? get(inputConfig, `${inputParam}.0`)
+                      : <b>{get(inputConfig, `${inputParam}.0`)}</b>
+                  }
+                </td>
+                <td>
+                  {
+                    defaultInputConfig[1] === get(inputConfig, `${inputParam}.1`)
+                      ? get(inputConfig, `${inputParam}.1`)
+                      : <b>{get(inputConfig, `${inputParam}.1`)}</b>
+                  }
+                </td>
+                <td>
+                  {
+                    defaultInputConfig[2] === get(inputConfig, `${inputParam}.2`)
+                      ? get(inputConfig, `${inputParam}.2`)
+                      : <b>{get(inputConfig, `${inputParam}.2`)}</b>
+                  }
+                </td>
               </tr>
             ))
           }
@@ -100,7 +122,7 @@ const ElevatorDetails = (props) => {
       </Table>
 
       <h4 className="mt-4 text-center">OUTPUTS CONFIGURATION</h4>
-      <Table striped>
+      <Table striped className="output-config-tb">
         <thead>
           <tr>
             <th>Output Name</th>
@@ -113,8 +135,20 @@ const ElevatorDetails = (props) => {
             outputParams.map((outputParam) => (
               <tr>
                 <td>{outputParam}</td>
-                <td>{get(outputConfig, `${outputParam}.0`)}</td>
-                <td>{get(outputConfig, `${outputParam}.1`)}</td>
+                <td>
+                  {
+                    get(defaultOutputConfig, `${outputParam}.0`) === get(outputConfig, `${outputParam}.0`)
+                      ? get(outputConfig, `${outputParam}.0`)
+                      : <b>{get(outputConfig, `${outputParam}.0`)}</b>
+                  }
+                </td>
+                <td>
+                  {
+                    get(defaultOutputConfig, `${outputParam}.1`) === get(outputConfig, `${outputParam}.1`)
+                      ? get(outputConfig, `${outputParam}.1`)
+                      : <b>{get(outputConfig, `${outputParam}.1`)}</b>
+                  }
+                </td>
               </tr>
             ))
           }
