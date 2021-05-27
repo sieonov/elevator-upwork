@@ -1,1 +1,2 @@
 export const GET_ELEVATOR_LIST = 'GET_ELEVATOR_LIST';
+export const POST_ELEVATOR = 'POST_ELEVATOR';

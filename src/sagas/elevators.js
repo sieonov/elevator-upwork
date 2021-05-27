@@ -10,8 +10,17 @@ function* getElevatorList(action) {
   }), action);
 }
 
+function* createElevator(action) {
+  yield call(request({
+    type: ElevatorConstants.POST_ELEVATOR,
+    method: 'POST',
+    url: action.payload.url,
+  }), action);
+}
+
 function* elevatorsSaga() {
   yield takeEvery(ElevatorConstants.GET_ELEVATOR_LIST, getElevatorList);
+  yield takeEvery(ElevatorConstants.POST_ELEVATOR, createElevator);
 }
 
 export default elevatorsSaga;
