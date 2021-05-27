@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Container, Table } from 'reactstrap';
 import get from 'lodash/get';
 import { addElevator } from '../../actions/elevators';
-import { calcElevatorConfig, calcInputConfig, calcOutputConfig, getTime, getDate } from '../../lib/utils';
+import { calcElevatorConfig, calcInputConfig, calcOutputConfig } from '../../lib/utils';
 import { elevatorParams, inputParams, outputParams } from '../../lib/constants';
 import './style.scss';
 
@@ -28,7 +28,12 @@ const ElevatorDetails = (props) => {
     props.addElevator({
       url: '/elevator',
       data: {
-        sn, firmwareVersion, factoryCode, device, carDoorOpenings,
+        sn,
+        firmwareVersion,
+        factoryCode,
+        device,
+        carDoorOpenings,
+        link: `${props.location.pathname}${props.location.search}`,
       },
       success: (res) => {
         console.log('Successfully created', res);
