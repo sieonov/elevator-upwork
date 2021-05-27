@@ -4,4 +4,4 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## CI Build URL
 
-<http://com.zonetail.reportmanager.s3-website-us-east-1.amazonaws.com/>
+<http://elevator-frontend.s3-website.us-east-2.amazonaws.com/>
