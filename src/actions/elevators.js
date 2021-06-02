@@ -3,3 +3,4 @@ import { createAction } from 'redux-actions';
 
 export const getElevatorList = createAction(ElevatorConstants.GET_ELEVATOR_LIST)
 export const addElevator = createAction(ElevatorConstants.POST_ELEVATOR)
+export const clearElevators = createAction(ElevatorConstants.CLEAR_ELEVATORS)

@@ -1,12 +1,14 @@
 import { Table as TableAnt } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Container } from 'reactstrap';
-import { getElevatorList } from '../../actions/elevators';
+import { Button } from 'antd';
+import { Col, Container, Row } from 'reactstrap';
+import { getElevatorList, clearElevators } from '../../actions/elevators';
 import { tablePage, tableSize } from '../../lib/constants';
 import './style.scss';
 
 const ListElevator = (props) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [elevatorList, setElevatorList] = useState([]);
   const [pagination, setPagination] = useState({
     page: tablePage,
@@ -45,9 +47,29 @@ const ListElevator = (props) => {
     setPagination({ ...pagination, page: page, size: size });
     // getListElevators({ ...pagination, page: page, size: size });
   };
+
+  const handleClear = () => {
+    setIsLoading(true);
+    props.clearElevators({
+      url: '/elevators',
+      success: () => {
+        setIsLoading(false);
+        setElevatorList([]);
+      },
+      fail: () => {
+        setIsLoading(false);
+      },
+    });
+  }
+
   return (
     <Container className="list-elevator">
       <h1 className="py-4">Elevator List</h1>
+      <Row className="flex-row justify-content-end mb-4">
+        <Col className="col-sm-6 col-md-3 text-end">
+          <Button type="primary" onClick={handleClear} loading={isLoading}>Clear all</Button>
+        </Col>
+      </Row>
       <TableAnt
         columns={[
           {
@@ -55,7 +77,7 @@ const ListElevator = (props) => {
             dataIndex: 'sn',
             key: '1',
             render: (value, item) => {
-              return <a href={item.link}>{value}</a>;
+              return <a href={`${item.link}&date=${item.date}&time=${item.time}`}>{value}</a>;
             },
             sorter: (a, b) => (a.sn > b.sn ? 1 : -1),
           },
@@ -131,6 +153,8 @@ const ListElevator = (props) => {
 
 const mapStateToProps = (state) => ({});
 
-const mapDispatchToProps = { getElevatorList };
+const mapDispatchToProps = {
+  getElevatorList, clearElevators,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListElevator);

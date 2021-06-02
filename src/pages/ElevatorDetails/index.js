@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Container, Table } from 'reactstrap';
 import get from 'lodash/get';
+import moment from 'moment-timezone';
 import { addElevator } from '../../actions/elevators';
 import { calcElevatorConfig, calcInputConfig, calcOutputConfig } from '../../lib/utils';
 import { elevatorParams, inputParams, outputParams, defaultElevatorConfig, defaultInputConfig, defaultOutputConfig } from '../../lib/constants';
@@ -11,37 +12,55 @@ const ElevatorDetails = (props) => {
   const [elevatorConfig, setElevatorConfig] = useState({});
   const [inputConfig, setInputConfig] = useState({});
   const [outputConfig, setOutputConfig] = useState({});
+  const [serialNumber, setSerialNumber] = useState('');
+  const [device, setDevice] = useState('');
+  const [time, setTime] = useState('');
+  const [date, setDate] = useState('');
+  const [firmware, setFirmware] = useState('');
 
   useEffect(() => {
     // Elevator Configuration
     const params = new URLSearchParams(props.location.search);
     const sn = params.get('s').substr(1, params.get('s').length - 2);
+    setSerialNumber(sn);
     const firmwareVersion = params.get('fv').substr(1, params.get('fv').length - 2);
+    setFirmware(firmwareVersion);
     const factoryCode = params.get('fc').substr(1, params.get('fc').length - 2);
     const device = params.get('d').substr(1, params.get('d').length - 2);
+    setDevice(device);
+    const timeV = params.get('time');
+    const dateV = params.get('date'); 
 
     const elevatorVal = params.get('e').substr(1, 4);
     console.log('Elevator Value', elevatorVal);
     const elevatorConfigTmp = calcElevatorConfig(elevatorVal);
     const carDoorOpenings = get(elevatorConfigTmp, elevatorParams[0]);
 
-    props.addElevator({
-      url: '/elevator',
-      data: {
-        sn,
-        firmwareVersion,
-        factoryCode,
-        device,
-        carDoorOpenings,
-        link: `${props.location.pathname}${props.location.search}`,
-      },
-      success: (res) => {
-        console.log('Successfully created', res);
-      },
-      fail: (err) => {
-        console.log('Error:', err);
-      },
-    });
+    console.log('date & time', dateV, dateV);
+    if (!timeV && !dateV) {
+      props.addElevator({
+        url: '/elevator',
+        data: {
+          sn,
+          firmwareVersion,
+          factoryCode,
+          device,
+          carDoorOpenings,
+          link: `${props.location.pathname}${props.location.search}`,
+        },
+        success: (res) => {
+          console.log('Successfully created', res);
+        },
+        fail: (err) => {
+          console.log('Error:', err);
+        },
+      });
+      setTime(moment().tz('America/New_York').format('hh:mm:ss'));
+      setDate(moment().tz('America/New_York').format('yyyy-MM-DD'))
+    } else {
+      setTime(timeV);
+      setDate(dateV);
+    }
     setElevatorConfig(elevatorConfigTmp);
     const inputVal = Array.from({ length: 12 }, (_, i) => i + 1).map((idx) => (params.get(`i${idx}`).substr(1, 2)))
     const outputVal = Array.from({ length: 4 }, (_, i) => i + 1).map((idx) => (params.get(`o${idx}`).substr(1, 2)))
@@ -53,7 +72,7 @@ const ElevatorDetails = (props) => {
 
   return (
     <Container className="elevator-details">
-      <h2 className="py-4">Serial Number, Device, Firmware and Time</h2>
+      <h2 className="py-4">{serialNumber}, {device}, {firmware} and {time}, {date}</h2>
       <h4 className="text-center">ELEVATOR CONFIGURATION</h4>
       <Table striped className="elevator-config-tb">
         <thead>
