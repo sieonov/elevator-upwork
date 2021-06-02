@@ -27,7 +27,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "deploy": "aws s3 sync build/ s3://elevator-frontend",
+    "deploy": "aws s3 sync build/ s3://argus-support",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
